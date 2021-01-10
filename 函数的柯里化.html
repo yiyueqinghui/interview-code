@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		function curry(fn){
+			let limit = fn.length;
+			return function judgeCury(...args){
+				if(args.length >= limit){
+					return fn.apply(null,args)
+				}else{
+					return function(...arg1){
+						return judgeCury.apply(null,args.concat(arg1))
+					}
+				}
+			}
+		}
+		
+		
+		function sum (a, b, c) {
+		  return a + b + c
+		}
+		const curriedSum = curry(sum)
+		console.log(curriedSum(1, 2, 3))
+		console.log(curriedSum(1)(2,3))
+		console.log(curriedSum(1)(2)(3))
+		
+		
+		
+		
+	</script>
+</html>

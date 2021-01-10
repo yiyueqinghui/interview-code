@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>发布订阅模式（事件总线）</title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//写法一   常规的对象写法
+		var eventBus = {};   //事件中心
+		var callbackObj = {}; //事件统计
+		
+		//订阅
+		eventBus.on = function(eventName,callback){
+			if(callbackObj[eventName]){
+				callbackObj[eventName].push(callback);
+			}else{
+				callbackObj[eventName] = [callback]
+			}
+		}
+		//取消订阅
+		eventBus.off = function(eventName){
+			if(eventName){
+				delete callbackObj[eventName]
+			}
+		}
+		//触发订阅事件
+		eventBus.emit = function(eventName,data){
+			let allCallback = callbackObj[eventName];
+			if(Array.isArray(allCallback)){
+				allCallback.forEach(callback=>{
+					callback(data)
+				})
+			}
+		}
+		
+		
+		//写法二  class写法
+		class EventCenter {
+			constructor(){
+				this.cache = {}
+			}
+			
+			//新增订阅
+			on(name,fn){
+				if(this.cache[name]){
+					this.cache[name].push(fn)
+				}else{
+					this.cache[name] = [fn]
+				}
+			}
+			
+			//取消订阅
+			off(name,fn){
+				const tasks = this.cache[name];
+				if(tasks){
+					const index = tasks.indexOf(fn);
+					if(index>=0){
+						tasks.splice(index,1)
+					}
+					
+				}
+			}
+			
+			//触发事件
+			emit(name){
+				const tasks = this.cache[name]
+				if(tasks){
+					tasks.forEach(fn=>{
+						fn();
+					})
+				}
+			}
+		}
+		
+		const eventObj = new EventCenter()
+		const task1 = () => { console.log('task1'); }
+		const task2 = () => { console.log('task2'); }
+		eventObj.on('task', task1)
+		eventObj.on('task', task2)
+		
+		setTimeout(() => {
+		  eventObj.emit('task')
+		}, 1000)
+		
+		
+	</script>
+</html>

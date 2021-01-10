@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		function mockJsonp(url,params,callback){
+			var callbackName = 'callback'+Math.random().toString(16).substring(2);
+			
+			var paramArr = [];
+			for(let key in params){
+				paramArr.push(`${key}=${params[key]}`) 
+			}
+			
+			var isHas = paramArr.length>0 '&':'',
+			    paramStr = paramArr.join('&')
+			url = `${url}?${paramStr}${isHas}callback${callbackName}`;
+			
+			var scriptDom = document.createElement('script');
+			script.type = 'text/javascript';
+			scriptDom.src = url;
+			
+			document.body.appendChild(scriptDom);
+			
+			window[callbackName] = function(data){
+				callback(data);
+				delete window[callbackName];
+				document.body.removeChild(scriptDom);
+			}		
+		}
+		
+		
+		
+	</script>
+</html>

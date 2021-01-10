@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		function objectFlat(obj) {
+			let simpleObj = {}
+			
+			function flat(newObj,baseKey){
+				for(let key in newObj){
+					let newKey = baseKey ? baseKey + '.' + key : key;
+					if(newObj[key].constructor === Object) {
+						flat(newObj[key], newKey);
+					} else {
+						simpleObj[newKey] = newObj[key];
+					}
+				}
+			}
+			flat(obj);
+			
+			return simpleObj;
+		}
+
+		function objectFlat1(obj = {}) {
+			const res = {}
+
+			function flat(item, preKey = '') {
+				Object.keys(item).forEach((key) => {
+					const newKey = preKey ? `${preKey}.${key}` : key;
+					const val = item[key];
+					if(val && typeof val === 'object') {
+						flat(val, newKey)
+					} else {
+						res[newKey] = val
+					}
+				})
+			}
+			flat(obj)
+			return res
+		}
+
+		// 测试
+		const source = {
+			a: {
+				b: {
+					c: 1,
+					d: 2
+				},
+				e: 3
+			},
+			f: {
+				g: 2
+			}
+		}
+		console.log(objectFlat(source));
+		console.log(objectFlat1(source));
+	</script>
+
+</html>

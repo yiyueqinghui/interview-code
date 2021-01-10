@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//单例模式
+		function Person(name){
+			this.name = name;
+		}
+		
+		var getInstance = (function(){
+			let instance;
+			return function(Fn,...args){
+				if(instance) return instance;
+				instance = new Fn(...args);
+				return instance;
+			}
+		})()
+		
+		let person1 = getInstance(Person,'Tony');
+		let person2 = getInstance(Person,'July');
+		console.log(person1 === person2);
+		console.log(person1,person2);
+	</script>
+</html>

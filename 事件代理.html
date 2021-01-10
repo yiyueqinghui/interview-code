@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件代理</title>
+	</head>
+	<body>
+		<ul id="list">
+			<li>第 1 条</li>
+			<li>第 2 条</li>
+			<li>第 3 条</li>
+		</ul>
+	</body>
+	<script>
+		document.getElementById('list').onclick = function(e){
+			let target = e.target;
+			if(target.tagName === 'LI'){
+				console.log(target.innerText);
+			}
+		}
+	</script>
+</html>

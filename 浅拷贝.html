@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>浅拷贝</title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//方法一   遍历循环法
+		function shallowCopy(data){
+			let newData = null;
+			if(data.constructor === Array || data.constructor === Object){
+			   newData = data.constructor === Array ? [] : {};	
+			   Object.keys(data).forEach(key=>{
+			   	   newData[key] = data[key];
+			   })
+			}else{
+			   newData = data;
+			}
+			return newData;
+			
+		}
+		
+		//方法二   es6的扩展运算符
+		function shallowCopy1(data){
+			let newData = null;
+			if(data.constructor === Array){
+				newData = [...data];
+			}else if(data.constructor === Object){
+				newData = {...data}
+			}else{
+				newData = data
+			}
+			return newData;
+		}
+		
+		
+		//方法三  Object.assign()
+		function shallowCopy2(data){
+			let newData = null;
+			if(data.constructor === Array){
+				newData = Object.assign([],data);
+			}else if(data.constructor === Object){
+				newData = Object.assign({},data);
+			}else{
+				newData = data
+			}
+			return newData;
+		}
+		
+		var obj = {a:1,b:[1,2]}
+		var arr = [1,{a:1}]
+		
+		console.log(shallowCopy(obj));
+		console.log(shallowCopy(arr));
+		
+		console.log(shallowCopy1(obj));
+		console.log(shallowCopy1(arr));
+		
+		console.log(shallowCopy2(obj));
+		console.log(shallowCopy2(arr));
+		
+		obj['b'].push(3);
+		arr[1]['a'] = 2;
+		
+		
+	</script>
+</html>

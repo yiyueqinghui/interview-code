@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		function ajax(method, url, params, callback) {
+			//1、对参数进行处理
+			method = method.toUpperCase();
+			let post_params = null,
+				get_params = ''
+
+			//2、针对请求方式，调整参数显示。get为key=val用&拼接的字符串，post为json对象
+			if(method === 'GET') {
+				let params_arr = [];
+				if(params.constructor === Object) {
+					for(let key in params) {
+						params_arr.push(`${key}=${params[key]}`)
+					}
+				}
+				url = url + '?' + params_arr.join('&');
+			} else if(method === 'POST') {
+				if(params.constructor === Object) {
+					post_params = params
+				}
+			}
+
+			//3、建立xhr对象
+			let xhr = new XMLHttpRequest()
+
+			//4、监听请求状态变化
+			/*xhr.readyState的值及解释：
+				0：请求未初始化（还没有调用bai open()）。
+				1：请求已经建立，但是还没有发送（还没有调用 send()）。
+				2：请求已发送，正在处理中（通常现在可以从响应中获取内容头）。
+				3：请求在处理中；通常响应中已有部分数据可用了，但是服务器还没有完成响应的生成。
+				4：响应已完成；您可以获取并使用服务器的响应了。
+				
+			  xhr.state的值的解释：
+			    1xx:信息响应类，表示接收到请求并且继续处理
+				2xx:处理成功响应类，表示动作被成功接收、理解和接受
+				3xx:重定向响应类，为了完成指定的动作，必须接受进一步处理
+				4xx:客户端错误，客户请求包含语法错误或者是不能正确执行
+				5xx:服务端错误，服务器不能正确执行一个正确的请求
+			*/
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState === 4 && xhr.state === 200) callback(xhr.responseText)
+			}
+
+			// 5、配制请求参数
+			xhr.open(method, url, false)
+
+			//6、配制请求头
+			if(method === 'POST') {
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+			}
+
+			// 7、发送请求 
+			xhr.send(post_params)
+		}
+	</script>
+
+</html>

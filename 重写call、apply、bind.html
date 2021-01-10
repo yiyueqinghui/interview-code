@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//重写call
+		Function.prototype.myCall = function(context,...args){
+			context.fn = this;
+			let result = context.fn(...args);
+			delete context.fn;
+			return result;
+		}
+		
+		
+		//重写apply
+		Function.prototype.myApply = function(context,args){
+			context.fn = this;
+			let result = context.fn(...args);
+			delete context.fn;
+			return result;
+		}
+		
+		
+		//重写bind
+		Function.prototype.myBind = function(context,...args){
+			context = context ? context : window;
+			context.fn = this;
+			return function(){
+				return context.fn(...args);
+			}
+		}
+		
+		
+		// 测试
+		let obj = {
+			fn(x, y){
+				console.log(this, x, y);
+			}
+		};
+		
+		obj.fn.myCall({age:100},50,60);
+		
+		let mockFn = obj.fn.bind(null, 10, 20); // {}, 10, 20
+		console.log(mockFn)
+		mockFn();
+		
+		let mockFn1 = obj.fn.myBind(null, 10, 20); // {}, 10, 20
+		console.log(mockFn1)
+		mockFn1();
+		
+		
+		
+		
+	</script>
+</html>

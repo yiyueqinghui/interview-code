@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//注意：定时器的第三个及其之后的参数是定时器要执行的函数的参数
+		function mockInterval(fn,inter,...args){
+			let that = this;
+			setTimeout(function(){
+				fn.apply(that,args);
+				mockInterval(fn,inter,...args);
+			},inter)
+		}
+		
+		mockInterval((num)=>console.log(num),500,10)
+		
+		
+		
+		
+		
+	</script>
+</html>

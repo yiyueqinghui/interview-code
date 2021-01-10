@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//递归法
+		function revertArr(arr){
+			let list = [];
+			arr.forEach(item=>{
+				if(item.constructor === Array){
+					list = list.concat(revertArr(item));  //注意：concat方法并不会修改原数组，只是返回一个新的数组
+				}else{
+					list.push(item)
+				}
+			})
+			return list;
+		}
+		
+		var arr = [1,[2,3,[4,5,{name:'cj'}]],[[[[6,[7]]]]]];
+		console.log(revertArr(arr));
+		
+		//while 循环法
+		function revertArr2(arr){
+			let list = [].concat(...arr);
+			let status = list.some(item=>Array.isArray(item));
+			while(status){
+				list = [].concat(...list);
+				status = list.some(item=>Array.isArray(item));
+			}
+			return list;
+		}
+		console.log(revertArr2(arr));
+	</script>
+</html>

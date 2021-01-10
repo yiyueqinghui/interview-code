@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>深度拷贝</title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//方法一   JSON.parse(JSON.stringify(targetObject))
+		//缺陷：
+		//1、对象的函数属性会丢失
+		//2、时间对象将转化为字符串,正则对象将转化为空对象,NaN、Infinity将转化为null,
+		//3、循环引入的对象无法进行JSON.stringify(obj)。否则将报错！可以使用JSON
+		
+		var test = {       
+		 name: 'a',
+		 sex:NaN,
+		 date: [new Date(1536627600000),{age:30},/123/g ],
+		 add:function(){} 
+		 
+		};
+//		var test1 = {}           //这就构成了两个对象之间的循环引用
+//		test.child = test1
+//		test1.parent = test
+		
+		var c = JSON.parse(JSON.stringify(test))
+		console.log(c)
+		
+		
+		// 方法二 循环 + 递归法
+		function deepCopy(obj){
+			let temp = null;
+			if(obj.constructor === Array){
+				temp = [];
+				obj.forEach((item,index)=>{
+					temp[index] = typeof item === 'object' ? deepCopy(item) : item;
+				})
+			}else if(obj.constructor === Function){
+				temp = obj;
+			}else if(obj.constructor === Object){
+				temp = {};
+				Object.keys(obj).forEach(key=>{
+					temp[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
+				})
+			}
+			
+			return temp;
+		}
+		var obj = {
+			name:'111',
+			person:{info:{} },
+			list:[1,{a:1}],
+			add:function(){}
+		};
+		var cloneObj = deepCopy(obj);
+		console.log(cloneObj);
+	</script>
+</html>

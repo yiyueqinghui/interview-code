@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//用reduce模拟map方法
+		Array.prototype.mockMap = function(fn){
+			return this.reduce((acc,item,i)=>{
+			   acc.push(fn(item,i));
+			   return acc;
+			},[])
+		}
+		
+	</script>
+</html>

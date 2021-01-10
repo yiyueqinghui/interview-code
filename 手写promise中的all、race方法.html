@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>手写promise</title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//重写 Promise.all
+		Promise.mockAll =(arr)=>{
+			let result = [];
+			return new Promise((resolve,reject)=>{
+				arr.forEach((p,idx)=>{
+					if(p.constructor === Promise){
+						p.then(res=>{
+							result[idx] = res;
+							if(result.length === arr.length){
+								resolve(result);
+							}
+						},reject)
+					}else{
+						result[idx] = p;
+					}
+				})
+			})
+		}
+		//测试 
+		let p3 = Promise.resolve(3);
+		let p2 = 1337;
+		let p1 = new Promise((resolve, reject) => {
+		  setTimeout(resolve, 100, 'foo');
+		}); 
+		Promise.mockAll([p1, p2, p3]).then(values => { 
+		  console.log(values); // [3, 1337, "foo"] 
+		});
+		
+		//有一个操作失败情况
+		let p4 = new Promise((resolve, reject) => { 
+		    setTimeout(resolve, 1000, 'one'); 
+		}); 
+		let p5 = new Promise((resolve, reject) => { 
+		    setTimeout(resolve, 2000, 'two'); 
+		});
+		let p6 = new Promise((resolve, reject) => {
+		    setTimeout(resolve, 3000, 'three');
+		});
+		let p7 = new Promise((resolve, reject) => {
+		    setTimeout(resolve, 4000, 'four');
+		});
+		let p8 = new Promise((resolve, reject) => {
+		    reject('reject');
+		});
+		  
+		Promise.mockAll([p4,p5,p6,p7,p8]).then(values => { 
+		    console.log(values);
+		}, reason => {
+		    console.log(reason);// reject
+		});
+		
+		
+		//重写Promise.race()
+		Promise.mockRace = function(arr){
+			return new Promise((resolve,reject)=>{
+				arr.forEach((item)=>{
+					if(item.constructor === Promise){
+						item.then(res=>{
+							resolve(res)
+						}).catch(err=>{
+							reject(err)
+						})
+					}else{
+						resolve(item);
+					}
+				})
+			})
+		}
+		let p10 = new Promise((resolve, reject) => { 
+		    setTimeout(resolve, 1000, 'one'); 
+		}); 
+		Promise.mockRace([p10,100]).then(res=>{
+			console.log(res)
+		}).catch(err=>{
+			console.log(err)
+		})
+		
+		
+		
+		
+	</script>
+</html>

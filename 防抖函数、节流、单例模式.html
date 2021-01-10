@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		
+	</body>
+	<script>
+		//防抖函数
+		function debounce(fn,wait){
+			let timer;
+			return function (){
+				if(timer) clearTimeout(inter);
+				let args = arguments,that = this;
+				timer = setTimeout(function(){
+					fn.apply(that,args);
+				},wait);
+			}
+		}
+		
+		//节流函数
+		function throttle(fn,wait){
+			let status = true;
+			return function(){
+				if(!status) return;
+				status = false;
+				let that = this,args = arguments;
+				setTimeout(function(){
+		            fn.apply(that,args);
+		            status = true;
+				},wait || 1000)
+				
+			}
+		}
+	</script>
+</html>

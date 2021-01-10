@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>instanceof模拟</title>
+	</head>
+	<body>
+	</body>
+	<script>
+		console.log([] instanceof Array);
+		function mockInstanceof(obj,constructorFn){
+			let pro = obj.__proto__ 
+			while(pro){
+				if(!pro){
+					return false;
+				}else if(pro === constructorFn.prototype){
+					return true;
+				}else{
+					pro = pro.__proto__
+				}
+			}
+		}
+		mockInstanceof([], Array)
+		
+		
+		
+	</script>
+</html>

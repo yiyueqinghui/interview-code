@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		function mockNew(constructFn,...args){
+			let obj = {};
+			obj.__proto__ = constructFn.prototype; // 创建新对象，修改其原型链的指向
+			
+			// 在这里调用时，将构造函数当作了普通函数来调用，
+			//由于构造函数默认返回当前创建的对象，不需要写return,所以这里返回的一般为空，所以最终返回的是obj。
+			//如果在构造函数上手动加入了return，则会返回其所返回的对象。
+			let result = constructFn.apply(obj,args);   
+			return result instanceof Object ? result : obj; 
+		}
+		
+		function Person(name){
+			this.name = name;
+		}
+		
+		let personInfo = mockNew(Person,'Tony');
+		console.log(personInfo);
+		
+	</script>
+</html>

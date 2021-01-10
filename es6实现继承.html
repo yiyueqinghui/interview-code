@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		class Parent {
+			constructor(name){
+				this.name = name;
+			}
+			
+			say(){
+				alert(this.name)
+			}
+		}
+		
+		class Child extends Parent {    //第一步，extends 继承
+			constructor(name,age){
+				super(name);           //第二步，super  传参并初始化所继承的父对象
+				this.age = age;
+			}
+			
+			tellName(){
+				console.log(this.name);
+				super.say();           //第三步，super.fn() 调用父对象的方法
+			}
+		}
+		
+		let info = new Child('cj',30)
+		console.log(info);
+		info.tellName();
+		
+		
+	</script>
+</html>

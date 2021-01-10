@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>异步请求并发数的限制</title>
+	</head>
+	<body>
+	</body>
+	<script>
+		/*
+		 * ajaxArr  异步请求列表 
+		 * count    限制请求并发的次数
+		 * finalFn  所有请求都发送完毕后执行的方法
+		 * */
+		function limitAjax(ajaxArr,count,finalFn){
+			let ajaxDivide = [];
+			for(let i = 0;i<ajaxArr.length; i+=count;){
+				let list = ajaxArr.slice(i,i+count);
+				ajaxDivide.push(list);
+			}
+			
+			let idx = 0 ,len = ajaxDivide.length - 1,result = [];
+			function sendAjax(ajaxDivideItem){
+				Promise.all(ajaxDivideItem).then(res=>{
+					result = result.concat(res);
+					if(idx === len){
+						finalFn(result);
+					}else{
+						idx++;
+						sendAjax(ajaxDivide[idx])
+					}
+				})
+			}
+			
+			sendAjax(ajaxDivide[idx])
+		}
+		
+		
+		
+	</script>
+</html>

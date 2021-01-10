@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//模拟数组的map方法
+		Array.prototype.mockMap = function(callback){
+			let list = [];
+			for(let idx = 0;idx<this.length;idx++){
+				list.push(callback(this[idx],idx));
+			}
+			return list;
+		}
+		
+		var list = [
+		  {name:'cj',age:30}
+		]
+		var newList = list.mockMap(function(item,idx){
+			item.random =parseInt(Math.random()*1000);
+			return item;
+		});
+		var newList1 = list.map(function(item,idx){
+			item.random =parseInt(Math.random()*1000);
+			return item;
+		});
+		console.log('--------mockMap---------------')
+		console.log('old',list);
+		console.log('mockMap',newList);
+		console.log('map',newList1);
+		
+		
+		
+		//模拟reduce()   对一个升序数组进行累加计算
+		Array.prototype.mockReduce = function(fn,initVal){
+			let [acc,initIdx] = initVal ? [initVal,0] : [this[0],1];
+			for(let idx = initIdx;idx<this.length;idx++){
+                acc = fn(acc,this[idx],idx,this);				
+			}
+			return acc;
+		}
+		var list1 = [1,2,3];
+		var acc1 = list1.reduce((acc,item,idx)=>{
+			return acc + item;
+		},0)
+		var acc2 = list1.mockReduce((acc,item,idx)=>{
+			return acc + item;
+		},0)
+		console.log('-------mockReduce----------------')
+		console.log(acc1,acc2);
+		
+		//模拟filter  返回原数组中所有符合条件的选项所组成的数组
+		Array.prototype.mockFilter = function(fn){
+			let list = [];
+			for(let idx = 0;idx<this.length;idx++){
+				if(fn(this[idx],idx)){
+					list.push(this[idx])
+				}
+			}
+			return list;
+		}
+		
+		//模拟find,注意find的参数是一个函数， 返回原数组中第一个符合条件的项，否则返回undefined
+		Array.prototype.mockFind = function(fn){
+			for(let idx=0;idx<this.length;idx++){
+				if(fn(this[idx],idx)){
+					return this[idx]
+				}
+			}
+			return undefined;
+		}
+		
+		//模拟every
+		Array.prototype.mockEvery = function(fn){
+			for(let idx = 0;idx<this.length;idx++){
+				if(!fn(this[idx],idx)){
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		//模拟some
+		Array.prototype.mockSome = function(fn){
+			for(let idx = 0;idx<this.length;idx++){
+				if(fn(this[idx],idx)){
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		//模拟forEach
+		//API:  arr.forEach(callback(currentValue [, index [, array]])[, thisArg])，
+		Array.prototype.mockForEach = function(fn,thisArg){
+			for(let idx = 0;idx<this.length;idx++){
+               fn.apply(thisArg,[this[idx],idx],this);				
+			}
+		}
+	</script>
+</html>

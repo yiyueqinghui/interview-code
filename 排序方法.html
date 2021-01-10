@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//插入排序
+		function insertSort(arr){
+		   for(let i in arr){
+		   	 while(i>0 && arr[i]<arr[i-1]){
+		   	 	[arr[i-1],arr[i]] = [arr[i],arr[i-1]]
+		   	 	i--
+		   	 }
+		   }
+		   return arr;
+		}
+
+        var list = [0,-2,8,3,7];
+        console.log(insertSort(list));
+        
+        
+        
+		
+		
+	</script>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		function getMost(arr) {
+			//计数，注意：这里用的是map,是由于map的key可以是对象，而Object的key不可是对象
+			let map = new Map()
+			arr.forEach(item => {
+				if(map.has(item)) {   //map.has(key) 方法 ，等同于对象的  Object.has(key)
+					map.set(item, map.get(item) + 1)      //map.get()获取值       map.set()设置值
+				} else {
+					map.set(item, 1)
+				}
+			})
+
+			//找出出现最多
+			let [max_vals, max_num] = [arr[0],0]   //假设第一个值出现了0次
+			map.forEach((item,key)=> {
+				if(item > max_num) {
+					max_vals = [key]
+					max_num = item
+				} else if(item === max_num) {
+					max_vals.push(key)
+				}
+			})
+			return max_vals
+		}
+
+		console.log(getMost(['3', '3', '55', '3', '55', '55','1', '2']))
+	</script>
+
+</html>
