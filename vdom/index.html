@@ -1,0 +1,59 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    1。虚拟dom为啥要存在
+    2. 虚拟dom是啥
+    3. 虚拟dom在 vue1 vue2 vue3 react15 react16中的发展
+    4. vue3
+  </div>
+
+  dom
+  <div id="app">哈哈</div>
+
+  dom的属性过多，性能杀手
+  dom很慢，但是js很快
+  jsx或者vue里的template，都会转义成js后执行
+
+  <script src="./vdom.js"></script>
+  <script>
+    // 虚拟dom
+    // const ele = {
+    //   type:'div',
+    //   children:'哈哈',
+    //   props:{
+    //     id:'app'
+    //   }
+    // }
+    // // 数据发生变化
+
+    // class Comp extends React.Component{
+
+    //   render(){
+    //     return <div id="app">哈哈</div>
+    //     babel会转成createElement('div',{props:{id:app}},'哈哈')
+    //   }
+      
+    // }
+    // ..vue
+    // ele进行任何的对比操作，都很快
+      // dom=> React.createElement() babel做的
+    const vnode = createElement('div',null,[
+      createElement('p',{key:'a'},'节点a'),
+      createElement('p',{key:'b'},'节点b'),
+      createElement('p',{key:'c'},'节点c'),
+      createElement('p',{key:'d'},'节点d'),
+    ])
+    console.log(vnode)
+      // componentt
+    // render(vnode, document.getElementById('app'))
+  </script>
+</body>
+</html>

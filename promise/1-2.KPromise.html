@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="js/KPromise.js"></script>
+<script>
+
+    let p1 = new KPromise( (resolve, reject) => {
+
+        console.log('异步任务开始');
+
+        setTimeout(() => {
+            console.log('异步任务完成');
+
+            resolve(100);
+
+            // reject('出错了');
+        }, 1000);
+
+    } );
+    p1.then( val => {
+        console.log('then1-1', val);
+    }, err => {
+        console.log('err1-1', err);
+    } );
+    p1.then( val => {
+        console.log('then1-2', val);
+    }, err => {
+        console.log('err1-2', err);
+    } );
+
+</script>
+
+</body>
+</html>

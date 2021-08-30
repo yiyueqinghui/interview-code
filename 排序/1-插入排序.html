@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		最普通的排序算法， 从数组下标1开始每增1项排序一次，越往后遍历次数越多；
+	</body>
+	<script>
+		//插入排序
+		function sort(arr){
+			var copyArr = [...arr]
+			for(let i=1;i<copyArr.length;i++){
+				var prev = i - 1,temp = copyArr[i];
+				while(prev>=0 && temp<copyArr[prev]){
+					// 后  > 前，互换位置
+				    [copyArr[prev+1],copyArr[prev] ] = [copyArr[prev],copyArr[prev+1]];
+					prev-- ;
+				}
+			}
+			return copyArr;
+		}
+		var list = [100,-5,10,0,0,-3,22,405,1,-3,96]
+		console.log(sort(list));
+		
+		
+	</script>
+</html>

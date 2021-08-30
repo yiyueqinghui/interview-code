@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="./js/KPromise.js"></script>
+<script>
+
+    let p1 = new KPromise( (resolve, reject) => {
+        setTimeout(() => {
+            // resolve(100);
+            reject('err1');
+        }, 1000);
+    } );
+
+    let p2 = p1.then( val => {
+        console.log('then1', val);
+        return 200;
+        // return KPromise.reject();
+    } );
+
+
+    p2.then( val => {
+        console.log('then2', val);
+    }, err => {
+        console.log('err2', err);
+    } );
+
+    KPromise.resolve(100).then(val => {
+        console.log(val);
+    });
+
+</script>
+
+</body>
+</html>

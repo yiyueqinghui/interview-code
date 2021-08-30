@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="./js/KPromise.js"></script>
+<script>
+
+    let p1 = new KPromise( (resolve, reject) => {
+        setTimeout(() => {
+            resolve(100);
+        }, 1000);
+    } );
+
+    p1.then( val => {
+        console.log('then1', val);
+
+        return new KPromise( (resolve, reject) => {
+            setTimeout(() => {
+                // ... 异步
+                console.log('setTimeout2');
+
+                resolve(200);
+            }, 1000);
+        } )
+
+        // return 200;
+    } ).then( val => {  // 是注册到了 p1.then 返回的新KPromise对象的任务回调中了
+        console.log('then2', val);
+    } );
+
+    // p1.then( val => {
+    //     console.log('then1-1', val);
+    // } );
+    // p1.then( val => {
+    //     console.log('then1-2', val);
+    // } );
+
+</script>
+
+</body>
+</html>

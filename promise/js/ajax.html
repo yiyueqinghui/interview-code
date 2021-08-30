@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text">
+    <button>按钮</button>
+
+    <button>ajax</button>
+
+    <script>
+
+        let input = document.querySelector('input');
+        let btns = document.querySelectorAll('button');
+
+        btns[0].onclick = function() {
+            console.log('input 的值是：', input.value);
+        }
+
+        btns[1].onclick = function() {
+
+            let xhr = new XMLHttpRequest();
+
+            xhr.onload = function() {
+                console.log('ajax 返回的值是：', this.responseText);
+            }
+
+            xhr.open('get', 'http://localhost:7777/', false);
+            xhr.send();
+
+        }
+
+    </script>
+
+</body>
+</html>

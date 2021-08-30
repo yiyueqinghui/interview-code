@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    let p1 = new Promise( (resolve, reject) => {
+        // 我们要执行的异步任务，Promise 对象就会帮助我们去执行该异步，同时记录异步任务的完成状态，根据不同状态执行后续的操作
+        console.log('异步任务开始');
+
+        setTimeout(() => {
+            console.log('异步任务完成');
+
+            // 获取到异步任务执行的结果，然后传递给后续的任务链函数（then）
+            resolve(100);
+        }, 3000);
+
+    } );
+    p1.then( val => {  // 类似事件函数的注册
+        console.log('then1', val);
+    } );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+    function fn1() {
+        let val = 1 + fn2();
+        console.log('fn1');
+        return val;
+    }
+
+    function fn2() {
+        let val = 1 + fn3();
+        console.log('fn2');
+        return val;
+    }
+
+    function fn3() {
+        console.log('fn3');
+        return 1;
+    }
+
+    let r = fn1();
+    console.log(r);
+</script>
+
+</body>
+</html>
